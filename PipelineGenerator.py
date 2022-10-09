@@ -4,6 +4,7 @@ import base64
 import requests
 import sys
 
+
 in_file = "base-wf-template.json"
 out_file = "template.yaml" 
 
@@ -44,11 +45,11 @@ def createApplicationTemplate(user_request: dict, base64_encoded_application_sou
     )
     print(response_for_application_template)
 
-def updateJson(input: dict)-> any:
+def updateJson(user_request: dict)-> any:
     with open(in_file) as json_file:
         json_decoded = json.load(json_file)
 
-    json_decoded['env']['namespace'] = input["namespace_name"]
+    json_decoded['env']['namespace'] = user_request["namespace_name"]
     return json_decoded
     # with open(in_file, 'w') as json_file:
     #     json.dump(json_decoded, json_file)
@@ -62,12 +63,14 @@ def encode_source_code_template():
         return base64_str
 
 
-if __name__ == '__main__':  
-    # user_request = sys.argv
-    user_request = {"repository_user": "mayankagarwal19911", "email":"mayank.agarwal19911@gmail.com",'repository_name':'lbg-statestreet-mortgage','client_id':'7500907','namespace_name':'statestreet_mortgage','template_repository_path':'https://github.com/learnk8s/docker-hello-world','description':'Borrower and Loan Use Description.'}
-    # print(user_request)
+if __name__ == '__main__': 
+    user_request = sys.argv[1]
+    json_acceptable_string = user_request.replace("'", "\"")
+    user_request = json.loads(json_acceptable_string)
+    # user_request = {"repository_user": "mayankagarwal19911", "email":"mayank.agarwal19911@gmail.com","repository_name":"lbg-statestreet-mortgage","client_id":"7500907","namespace_name":"statestreet_mortgage","template_repository_path":"https://github.com/learnk8s/docker-hello-world","description":"Borrower and Loan Use Description."}
     json_decoded = updateJson(user_request)
-    # print(json_decoded)
+
+    # # print(json_decoded)
     base64_encoded_workflow_data = generateWorkflow(json_decoded)
     # print(base64_encoded_workflow_data)
     base64_encoded_application_source = encode_source_code_template()
