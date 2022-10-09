@@ -1,61 +1,41 @@
 {
-  "name": "Terraform",
-  "on": {
-    "push": {
-      "branches": [
-        "main"
-      ]
+    "name": "Terraform",
+    "on": {
+      "push": {
+        "branches": [
+          "main"
+        ]
+      }
     },
-    "workflow_dispatch": {
-      "inputs": {
-        "repository_name": {
-          "required": true
+    "env": {
+      "VCS_WORKSPACE_NAME": "github-workflow",
+      "TF_VERSION": "0.14.3",
+      "WORKING_DIRECTORY": "",
+      "VCS_REPO": "mayankagarwal19911/test-workflow",
+      "VCS_BRANCH": "main",
+      "TFE_ADDR": "https://app.terraform.io",
+      "TFE_ORG": "test-cicd",
+      "namespace": "statestreet_mortgage"
+    },
+    "permissions": {
+      "contents": "read"
+    },
+    "jobs": {
+      "terraform": {
+        "name": "Terraform",
+        "runs-on": "ubuntu-latest",
+        "environment": "development",
+        "defaults": {
+          "run": {
+            "shell": "bash"
+          }
         },
-        "client_id": {
-          "required": false
-        },
-        "namespace_name": {
-          "required": true
-        },
-        "template_repository_path": {
-          "required": false,
-          "default": "https://github.com/learnk8s/docker-hello-world"
-        },
-        "description": {
-          "required": false
-        }
+        "steps": [
+          {
+            "name": "install curl",
+            "run": "echo \"Hello ${{ github.event.inputs.repository_name }}\"\necho \"Hello ${{ github.event.inputs.client_id }}\"\necho \"Hello ${{ github.event.inputs.namespace_name }}\"\necho \"Hello ${{ github.event.inputs.template_repository_path }}\"\necho \"Hello ${{ github.event.inputs.description }}\"\n"
+          }
+        ]
       }
     }
-  },
-  "env": {
-    "VCS_WORKSPACE_NAME": "github-workflow",
-    "TF_VERSION": "0.14.3",
-    "WORKING_DIRECTORY": "",
-    "VCS_REPO": "mayankagarwal19911/test-workflow",
-    "VCS_BRANCH": "main",
-    "TFE_ADDR": "https://app.terraform.io",
-    "TFE_ORG": "test-cicd",
-    "namespace": "statestreet_mortgage"
-  },
-  "permissions": {
-    "contents": "read"
-  },
-  "jobs": {
-    "terraform": {
-      "name": "Terraform",
-      "runs-on": "ubuntu-latest",
-      "environment": "development",
-      "defaults": {
-        "run": {
-          "shell": "bash"
-        }
-      },
-      "steps": [
-        {
-          "name": "install curl",
-          "run": "echo \"Hello ${{ github.event.inputs.repository_name }}\"\necho \"Hello ${{ github.event.inputs.client_id }}\"\necho \"Hello ${{ github.event.inputs.namespace_name }}\"\necho \"Hello ${{ github.event.inputs.template_repository_path }}\"\necho \"Hello ${{ github.event.inputs.description }}\"\n"
-        }
-      ]
-    }
   }
-}
