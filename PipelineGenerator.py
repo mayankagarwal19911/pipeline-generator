@@ -79,10 +79,8 @@ if __name__ == '__main__':
     # user_request = {"repository_user": "mayankagarwal19911", "email":"mayank.agarwal19911@gmail.com","repository_name":"lbg-statestreet-mortgage","client_id":"7500907","namespace_name":"statestreet_mortgage","template_repository_path":"https://github.com/learnk8s/docker-hello-world","description":"Borrower and Loan Use Description."}
     json_decoded = updateJson(user_request)
 
-    # print(json_decoded)
     base64_encoded_workflow_data = generateWorkflow(json_decoded)
-    # print(base64_encoded_workflow_data)
     base64_encoded_application_source = encode_source_code_template()
-    # generateRepository(user_request)
-    # createWorkflowFile(user_request, base64_encoded_workflow_data)
+    generateRepository(user_request)
+    createWorkflowFile(user_request, base64_encoded_workflow_data)
     createApplicationTemplate(user_request, base64_encoded_application_source)
