@@ -37,14 +37,18 @@ jobs:
   
     - name: Cloning data template to user repository
       run: |
-        echo "${{ secrets.GH_TOKEN }}"
-        git config user.name "mayankagarwal19911"
-        git config user.email "mayank.agarwal19911@gmail.com"
+        git config --global user.name "mayankagarwal19911"
+        git config --global user.email "mayank.agarwal19911@gmail.com"
         git clone https://github.com/mayankagarwal19911/lbg-springboot-template.git
-        git remote add upstream https://mayankagarwal19911@github.com/mayankagarwal19911/to-delete.git
+        git fetch --unshallow https://github.com/mayankagarwal19911/lbg-springboot-template.git
+        cd lbg-springboot-template/
+        ls
+        rm -rf .git
+        git init
+        git remote -v
         git add .
         git commit -m "first commit"
-        git pull
-        git branch -M main
-        git status
-        git push -f upstream main
+        git branch -M master
+        git remote add origin https://${{ secrets.GH_TOKEN }}@github.com/mayankagarwal19911/to-delete.git
+        # git remote add origin https://mayankagarwal19911@github.com/mayankagarwal19911/to-delete.git
+        git push origin master
