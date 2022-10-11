@@ -9,7 +9,7 @@ def generateUserRepository(user_request: dict, token: any) -> any:
         headers={"Accept":"application/vnd.github+json","Authorization":"Bearer "+token},
     )
 
-    return response.json()
+    return response.json()["git_url"]
 
 if __name__ == '__main__': 
     user_request = sys.argv[1]
