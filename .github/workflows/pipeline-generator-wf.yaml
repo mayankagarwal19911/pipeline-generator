@@ -9,18 +9,14 @@ name: LBG PE Pipeline Generator
         value:
           required: true
           type: string
-          # default : "{'repository_name':'lbg-statestreet-mortgage','client_id':'7500907','namespace_name':'statestreet_mortgage','template_repository_path':'https://github.com/learnk8s/docker-hello-world','description':'Borrower and Loan Use Description.'}"
 
 permissions:
   contents: write
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    
     - uses: actions/checkout@v3
       with:
         token: '${{ secrets.GH_TOKEN }}'
@@ -31,28 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Generate User Repository
-      run: |
-        output=$(echo $(python generateuserrepository.py "${{ github.event.inputs.value }}" "${{ secrets.GH_TOKEN }}"))
-        echo "::set-output name=generated_repo_response::$output"
-      id: generate_user_repo
-    - name: Cloning data template to user repository
-       # env:
-         # REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_repo_response }}
-      run: |
-        echo "${{ steps.generate_user_repo.outputs.generated_repo_response }}"
-        # git config --global user.name "mayankagarwal19911"
-        # git config --global user.email "mayank.agarwal19911@gmail.com"
-        # git clone https://github.com/mayankagarwal19911/lbg-springboot-template.git
-        # git fetch --unshallow https://github.com/mayankagarwal19911/lbg-springboot-template.git
-        # cd lbg-springboot-template/
-        # ls
-        # rm -rf .git
-        # git init
-        # git remote -v
-        # git add .
-        # git commit -m "first commit"
-        # git branch -M master
-        # git remote add origin https://${{ secrets.GH_TOKEN }}@github.com/"+$REPO_NAME+".git
-        # git push -f origin master
+        if [ -f requirements.txt ]; then pip install -r python-scripts/requirements.txt; fi
+    - name: Running Pipeline Generator Python Script
+      run: python python-scripts/pipelinegenerator.py "${{ github.event.inputs.value }}" "${{ secrets.GH_TOKEN }}"
+  
