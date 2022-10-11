@@ -1,5 +1,6 @@
 import requests
 import json
+import sys
 
 def generateUserRepository(user_request: dict, token: any) -> None:
     response = requests.post(
@@ -9,3 +10,11 @@ def generateUserRepository(user_request: dict, token: any) -> None:
     )
 
     print(response.json())
+
+if __name__ == '__main__': 
+    user_request = sys.argv[1]
+    user_token = sys.argv[2]
+    json_acceptable_string = user_request.replace("'", "\"")
+    user_request = json.loads(json_acceptable_string)
+
+    generateUserRepository(user_request, user_token)
