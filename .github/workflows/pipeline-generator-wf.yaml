@@ -34,7 +34,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Generate User Repository
       run: |
-        echo "::set-output name=generated_repo_response::$(python generateuserrepository.py '${{ github.event.inputs.value }}' '${{ secrets.GH_TOKEN }}')"
+        output="$(python generateuserrepository.py '${{ github.event.inputs.value }}' '${{ secrets.GH_TOKEN }}')"
+        echo "::set-output name=generated_repo_response::$output"
       id: generate_user_repo
     - name: Cloning data template to user repository
        # env:
