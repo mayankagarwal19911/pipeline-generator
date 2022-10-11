@@ -2,14 +2,14 @@ import requests
 import json
 import sys
 
-def generateUserRepository(user_request: dict, token: any) -> None:
+def generateUserRepository(user_request: dict, token: any) -> any:
     response = requests.post(
         "https://api.github.com/user/repos",
         data=json.dumps({"name":user_request["repository_name"]}),
         headers={"Accept":"application/vnd.github+json","Authorization":"Bearer "+token},
     )
 
-    print(response.json())
+    return response.json()
 
 if __name__ == '__main__': 
     user_request = sys.argv[1]
