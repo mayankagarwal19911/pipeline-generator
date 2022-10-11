@@ -35,11 +35,11 @@ jobs:
     - name: Generate User Repository
       run: |
         output=$(python generateuserrepository.py "${{ github.event.inputs.value }}" "${{ secrets.GH_TOKEN }}")
-        echo "::set-output name=generated_git_repo_response::$output" 
+        echo "::set-output name=generated_repo_response::$output" 
       id: generate_user_repo
     - name: Cloning data template to user repository
-      env:
-        REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_git_repo_response.* }}
+       # env:
+         # REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_repo_response.* }}
       run: |
         echo ${{ steps.generate_user_repo.outputs.generated_git_repo_response }}
         # git config --global user.name "mayankagarwal19911"
