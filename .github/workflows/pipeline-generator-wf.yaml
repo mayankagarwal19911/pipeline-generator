@@ -38,7 +38,7 @@ jobs:
         echo "::set-output name=generated_git_url::$output" 
     - name: Cloning data template to user repository
       run: |
-        echo "${{ steps.step2.outputs.generated_git_url }}"
+        echo "${{ steps.step4.outputs.generated_git_url }}"
         git config --global user.name "mayankagarwal19911"
         git config --global user.email "mayank.agarwal19911@gmail.com"
         git clone https://github.com/mayankagarwal19911/lbg-springboot-template.git
