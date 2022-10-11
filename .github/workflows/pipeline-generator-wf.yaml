@@ -33,11 +33,12 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Generate User Repository
-      run: generated_git_url = $(python generateuserrepository.py "${{ github.event.inputs.value }}" "${{ secrets.GH_TOKEN }}")
-  
+      run: |
+        generated_git_url = $(python generateuserrepository.py "${{ github.event.inputs.value }}" "${{ secrets.GH_TOKEN }}")
+        echo "::set-output name=user_git_url::$generated_git_url" 
     - name: Cloning data template to user repository
       run: |
-        echo "${{ generated_git_url }}"
+        echo "${{ steps.step2.outputs.user_git_url }}"
         git config --global user.name "mayankagarwal19911"
         git config --global user.email "mayank.agarwal19911@gmail.com"
         git clone https://github.com/mayankagarwal19911/lbg-springboot-template.git
