@@ -6,7 +6,7 @@ import sys
 from generateuserrepository import generateUserRepository
 from cloneapplicationtemplatetouserrepository import cloneApplicationTemplateToUserRepository
 
-in_file = "templates/wf-template.json"
+in_file = ""
 # out_file = "template.yaml" 
 
 def generateWorkflowFromJsonTemplate(json_decoded: dict)-> any:
@@ -48,12 +48,15 @@ def updateTemplateJsonForUserJson(user_request: dict)-> any:
 if __name__ == '__main__': 
     user_request = json.loads(sys.argv[1].replace("'", "\""))
     gh_token = sys.argv[2]
-
+    if user_request["app_type"] == 'java':
+        in_file = "templates/wf-template-java.json"
+    else:
+         in_file = "templates/wf-template-node.json"
     wf_template_json = updateTemplateJsonForUserJson(user_request)
 
-    decoded_wf_template_yaml = generateWorkflowFromJsonTemplate(wf_template_json)
+    encoded_wf_template_yaml = generateWorkflowFromJsonTemplate(wf_template_json)
 
     # Do not change the order of below function calls
     repository_details = generateUserRepository(user_request, gh_token)
     cloneApplicationTemplateToUserRepository(user_request["template_path"], repository_details, gh_token)
-    commitWorkFlowFileToUserRepository(user_request, decoded_wf_template_yaml, gh_token)
+    commitWorkFlowFileToUserRepository(user_request, encoded_wf_template_yaml, gh_token)
