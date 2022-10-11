@@ -39,7 +39,7 @@ jobs:
       id: generate_user_repo
     - name: Cloning data template to user repository
       env:
-        REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_git_repo_response.full_name }}
+        REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_git_repo_response }}
       run: |
         echo $REPO_NAME
         # git config --global user.name "mayankagarwal19911"
