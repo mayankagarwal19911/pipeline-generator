@@ -51,4 +51,4 @@ jobs:
         git branch -M master
         git remote add origin https://${{ secrets.GH_TOKEN }}@github.com/mayankagarwal19911/to-delete.git
         # git remote add origin https://mayankagarwal19911@github.com/mayankagarwal19911/to-delete.git
-        git push origin master
+        git push -f origin master
