@@ -8,8 +8,7 @@ def generateUserRepository(user_request: dict, token: any) -> any:
         data=json.dumps({"name":user_request["repository_name"]}),
         headers={"Accept":"application/vnd.github+json","Authorization":"Bearer "+token},
     )
-
-    return response.json()["git_url"]
+    return response.json()
 
 if __name__ == '__main__': 
     user_request = sys.argv[1]
