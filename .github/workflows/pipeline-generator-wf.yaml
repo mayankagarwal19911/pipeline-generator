@@ -39,9 +39,9 @@ jobs:
       id: generate_user_repo
     - name: Cloning data template to user repository
       env:
-        REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_git_repo_response }}
+        REPO_NAME: ${{ steps.generate_user_repo.outputs.generated_git_repo_response.* }}
       run: |
-        echo $REPO_NAME
+        echo ${{ steps.generate_user_repo.outputs.generated_git_repo_response }}
         # git config --global user.name "mayankagarwal19911"
         # git config --global user.email "mayank.agarwal19911@gmail.com"
         # git clone https://github.com/mayankagarwal19911/lbg-springboot-template.git
