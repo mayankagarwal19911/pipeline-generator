@@ -9,7 +9,7 @@ name: LBG PE Pipeline Generator
         value:
           required: true
           type: string
-          default : "{'repository_name':'lbg-statestreet-mortgage','client_id':'7500907','namespace_name':'statestreet_mortgage','template_repository_path':'https://github.com/learnk8s/docker-hello-world','description':'Borrower and Loan Use Description.'}"
+          # default : "{'repository_name':'lbg-statestreet-mortgage','client_id':'7500907','namespace_name':'statestreet_mortgage','template_repository_path':'https://github.com/learnk8s/docker-hello-world','description':'Borrower and Loan Use Description.'}"
 
 permissions:
   contents: write
@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
     - uses: actions/checkout@v3
       with:
         token: '${{ secrets.GH_TOKEN }}'
@@ -33,4 +34,17 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Generate User Repository
       run: python generateuserrepository.py "${{ github.event.inputs.value }}" "${{ secrets.GH_TOKEN }}"
-
+  
+    - name: Cloning data template to user repository
+      run: |
+        echo "${{ secrets.GH_TOKEN }}"
+        git config user.name "mayankagarwal19911"
+        git config user.email "mayank.agarwal19911@gmail.com"
+        git clone https://github.com/mayankagarwal19911/lbg-springboot-template.git
+        git remote add upstream https://mayankagarwal19911@github.com/mayankagarwal19911/to-delete.git
+        git add .
+        git commit -m "first commit"
+        git pull
+        git branch -M main
+        git status
+        git push -f upstream main
